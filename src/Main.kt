@@ -7,33 +7,33 @@ class Bodega {
     fun addProduct(product: Product, cantidad: Int) {
         if (product.name == "") {
             println("Ingrese un nombre valido")
-        } else {
-            if (!products.contains(product)) {
-                products.add(product)
-                product.stock = cantidad
-                println("producto agregado ${product.name}, ${product.stock}")
-            } else {
-                //println("stock actual ${product.stock} ${product.name}")
-                product.stock += cantidad
-                println("Nuevo stock ${product.stock} ${product.name}")
-            }
+            return
         }
+        if (products.contains(product)) {
+            product.stock += cantidad
+            println("Nuevo stock ${product.stock} ${product.name}")
+            return
+        }
+        products.add(product)
+        product.stock = cantidad
+        println("producto agregado ${product.name}, ${product.stock}")
     }
 
     fun deleteProduct(product: Product, cantidad: Int) {
-        if (products.contains(product)) {
-            //var newStock = product.stock
-            //newStock -= cantidad
-            product.stock -= cantidad
-            println("El producto ${product.name} ha sido vendido")
-            println("Stock actualizado = ${product.stock} ${product.name}")
-        } else {
-            println("El producto ${product.name} no fue encontrado")
+        if (!products.contains(product)) {
+            return println("El producto ${product.name} no fue encontrado")
         }
+        product.stock -= cantidad
+        println("El producto ${product.name} ha sido vendido")
+        println("Stock actualizado = ${product.stock} ${product.name}")
     }
 
     fun getProducts() {
-        println(products)
+        products.forEach {
+            println(it)
+        }
+        println(this.products)
+       // return products
     }
 }
 
@@ -58,14 +58,17 @@ class Empleado(val DNI: Int, val nombre: String) {
         dineroObtenido(product)
 
     }
+
     private fun dineroObtenido(product: Product) {
         val total = product.price * product.stock
         dineroTotal = total
     }
+
     fun products() {
         bodega.getProducts()
     }
-    fun corteCaja(){
+
+    fun corteCaja() {
         println("Dinero total obtenido $dineroTotal")
     }
 }
@@ -87,7 +90,7 @@ fun main() {
     //dia 1
     //negocio2.venderProducto(licuadora, 15)
     //dia 2
-    negocio3.cargarStock(refrigerador,10)
+    negocio3.cargarStock(refrigerador, 10)
     //dia 3
     //negocio1.venderProducto(television,5)
     //dia 4
@@ -95,26 +98,27 @@ fun main() {
     //dia 5
     //negocio2.venderProducto(licuadora,10)
     //dia 6
-    negocio3.venderProducto(refrigerador,3)
+    negocio3.venderProducto(refrigerador, 3)
     //dia 7
     //negocio2.cargarStock(licuadora,10)
     //dia 8
     //negocio1.cargarStock(refrigerador,5)
-    negocio3.venderProducto(refrigerador,5)
+    negocio3.venderProducto(refrigerador, 5)
     //dia 9
     //negocio2.cargarStock(television,7)
     //negocio1.venderProducto(television,7)
     //println("compro al negocio1")
     //negocio2.cargarStock(refrigerador,7)
-    negocio3.venderProducto(refrigerador,7)
+    negocio3.venderProducto(refrigerador, 7)
     //dia 10
     //println("vende negocio1")
     //negocio1.venderProducto(television,5)
     println("vende negocio2")
     //negocio2.venderProducto(licuadora,5)
     println("vende negocio3")
-    negocio3.venderProducto(refrigerador,5)
+    negocio3.venderProducto(refrigerador, 5)
     negocio1.corteCaja()
     negocio2.corteCaja()
     negocio3.corteCaja()
+    negocio2.products()
 }
